@@ -6,10 +6,18 @@ My old solution was to cut out graph paper for each day of the year (remaining) 
 
 = What is This =
 
-A startup script for zsh to see time remaining in the year as a progress of coloured squares.
+A startup script to see time remaining in the year as a progress of coloured squares.
 
 Why? Read the Intro above.
 
 = To Do =
-- [ ] show squares corresponding to days left in the year
+- [X] show squares corresponding to days left in the year
+- [ ] display by month if argument set
 - [ ] make it show on start up (once)
+
+= Tribulations =
+- ASCII codes very limited and terminal specific
+
+= Technical Concepts =
+* terminal control code: characters not printed -> preforms action
+    - resource: https://wiki.bash-hackers.org/scripting/terminalcodes
