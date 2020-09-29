@@ -1,1 +1,15 @@
-= hi =
+= Introduction =
+
+I found time to be largely too abstract to visualize over a long period of time.
+
+My old solution was to cut out graph paper for each day of the year (remaining) and colour in each day in passing. This served my needs to picture my imminent death quite well, until I forgot to colour my squares on the graph paper and it became a habitual hassle.
+
+= What is This =
+
+A startup script for zsh to see time remaining in the year as a progress of coloured squares.
+
+Why? Read the Intro above.
+
+= To Do =
+- [ ] show squares corresponding to days left in the year
+- [ ] make it show on start up (once)
