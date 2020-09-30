@@ -26,35 +26,49 @@ fi
 SQUARE="_/"
 
 # background colours
-COL_BLACK="$(tput setab 0)"
-COL_RED="$(tput setab 1)"
-COL_GREEN="$(tput setab 2)"
-COL_YELLOW="$(tput setab 3)"
-COL_BLUE="$(tput setab 4)"
-COL_MAGENTA="$(tput setab 5)"
-COL_CYAN="$(tput setab 6)"
-COL_WHITE="$(tput setab 7)"
+BG_BLACK="$(tput setab 0)"
+BG_RED="$(tput setab 1)"
+BG_GREEN="$(tput setab 2)"
+BG_YELLOW="$(tput setab 3)"
+BG_BLUE="$(tput setab 4)"
+BG_MAGENTA="$(tput setab 5)"
+BG_CYAN="$(tput setab 6)"
+BG_WHITE="$(tput setab 7)"
 
-# colours in use
-COL_CURRENT=${COL_RED}
-CHARACTER_COL="$(tput setaf 7)"
+# foreground colours
+FG_BLACK="$(tput setaf 0)"
+FG_RED="$(tput setaf 1)"
+FG_GREEN="$(tput setaf 2)"
+FG_YELLOW="$(tput setaf 3)"
+FG_BLUE="$(tput setaf 4)"
+FG_MAGENTA="$(tput setaf 5)"
+FG_CYAN="$(tput setaf 6)"
+FG_WHITE="$(tput setaf 7)"
+
+# colours in use: character
+BG_COL=${BG_RED}
+FG_COL=${FG_WHITE}
+
+# colours in use: heading
+BG_HEADER=${BG_BLACK}
+FG_HEADER=${FG_CYAN}
 
 # | Year progress with days |
-basic() {
+daily() {
     # counter of days past in the year
-    counter=0
+    counter=1
     while [ $counter -le $MAX_DAYS ]
     do
         if [ $counter -lt $THIS_YEAR_DAYS ]
         then
-            COL_CURRENT=${COL_RED}
+            BG_COL=${BG_RED}
         elif [ $counter -eq $THIS_YEAR_DAYS ]
         then
-            COL_CURRENT=${COL_WHITE}
+            BG_COL=${BG_WHITE}
         else
-            COL_CURRENT=${COL_BLACK}
+            BG_COL=${BG_BLACK}
         fi
-        printf "%s" "${COL_CURRENT}${CHARACTER_COL}${SQUARE}"
+        printf "${BG_COL}${FG_COL}${SQUARE}"
         ((counter++))
     done
     # remove the last character - weird output %
@@ -66,47 +80,41 @@ monthly() {
     # months in the short form
     month_str=`locale abmon` 
     month_str_arr=($(echo $month_str | tr ";" "\n"))
-    echo $month_str_arr
 
-    # resulting output
-    # TODO: string or vector
-    output=''
-
-    for mon_idx in "${month_str_arr[@]}"
+    ctr_month=1
+    for mon_str in "${month_str_arr[@]}"
     do
-        echo $mon_idx
-    done
+        # short form of month label
+        printf "${COL_HEADER}$mon_str "
 
-    counter=0
-    while [ $counter -le $MAX_DAYS ]
-    do
-        # colour picker
-        if [ $counter -lt $CURRENT_DAYS ]
+        # number of days in the indexed month
+        max_days=`cal $ctr_month $CURRENT_YEAR | awk 'NF {D = $NF}; END {print D}'`
+
+        # assign proper colour
+        if [ $ctr_month -lt $CURRENT_MONTH ]
         then
             COL_CURRENT=${COL_RED}
-        elif [ $counter -eq $CURRENT_DAYS ]
-        then
-            COL_CURRENT=${COL_WHITE}
+            for i in $(eval echo {0..$max_days})
+            do
+                printf "${COL_CURRENT}${CHARACTER_COL}${SQUARE}"
+            done
         else
             COL_CURRENT=${COL_BLACK}
+            for i in $(eval echo {0..$max_days})
+            do
+                printf "${COL_CURRENT}${CHARACTER_COL}${SQUARE}"
+            done
         fi
-
-        # seperate days in months
-
-
-        # is_column_end=$(($counter % 3))
-        # if [ $is_column_end -eq 0 ]
-        # then
-        #     printf "\n%s" "${COL_CURRENT}${CHARACTER_COL}${SQUARE}"
-        # else
-        #     printf "%s" "${COL_CURRENT}${CHARACTER_COL}${SQUARE}"
-        # fi
-        ((counter++))
+        
+        printf "\n"
+        ((ctr_month++))
     done
-    printf "%s" "${output}"
-    # remove the last character - weird output %
-    echo
+
+    # for date_idx in "${DATE_ARR[@]}"
+    # do
+    #     echo $date_idx
+    # done
 }
 
-# monthly
-basic
+# daily
+monthly
