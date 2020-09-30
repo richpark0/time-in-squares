@@ -1,13 +1,18 @@
 #!/bin/bash
 
 # basic date info
-TODAY=`date +%s`
-CURRENT_YEAR=`date +%Y`
-START_OF_YEAR=`date +%s --date "${CURRENT_YEAR}-01-01"`
+DATE_INFO=`date +"%Y %m %d %s"`
+DATE_ARR=($(echo $DATE_INFO | tr " " "\n"))
+CURRENT_YEAR=${DATE_ARR[0]}
+CURRENT_MONTH=${DATE_ARR[1]}
+CURRENT_DAY=${DATE_ARR[2]}
+CURRENT_SECONDS=${DATE_ARR[3]}
+
+START_SECONDS=`date +%s --date "${CURRENT_YEAR}-01-01"`
 
 # number of days past this year
-START_TO_NOW=$(($TODAY-$START_OF_YEAR))
-CURRENT_DAYS=$(($START_TO_NOW/(3600*24)))
+THIS_YEAR_SECONDS=$(($CURRENT_SECONDS-$START_SECONDS))
+THIS_YEAR_DAYS=$(($THIS_YEAR_SECONDS/(3600*24)))
 
 # total number of days this year
 MAX_DAYS=365
@@ -40,10 +45,10 @@ basic() {
     counter=0
     while [ $counter -le $MAX_DAYS ]
     do
-        if [ $counter -lt $CURRENT_DAYS ]
+        if [ $counter -lt $THIS_YEAR_DAYS ]
         then
             COL_CURRENT=${COL_RED}
-        elif [ $counter -eq $CURRENT_DAYS ]
+        elif [ $counter -eq $THIS_YEAR_DAYS ]
         then
             COL_CURRENT=${COL_WHITE}
         else
@@ -60,13 +65,14 @@ basic() {
 monthly() {
     # months in the short form
     month_str=`locale abmon` 
-    month_arr=($(echo $month_str | tr ";" "\n"))
+    month_str_arr=($(echo $month_str | tr ";" "\n"))
+    echo $month_str_arr
 
     # resulting output
     # TODO: string or vector
     output=''
 
-    for mon_idx in "${month_arr[@]}"
+    for mon_idx in "${month_str_arr[@]}"
     do
         echo $mon_idx
     done
@@ -85,14 +91,16 @@ monthly() {
             COL_CURRENT=${COL_BLACK}
         fi
 
-        # formatter
-        is_column_end=$(($counter % 3))
-        if [ $is_column_end -eq 0 ]
-        then
-            printf "\n%s" "${COL_CURRENT}${CHARACTER_COL}${SQUARE}"
-        else
-            printf "%s" "${COL_CURRENT}${CHARACTER_COL}${SQUARE}"
-        fi
+        # seperate days in months
+
+
+        # is_column_end=$(($counter % 3))
+        # if [ $is_column_end -eq 0 ]
+        # then
+        #     printf "\n%s" "${COL_CURRENT}${CHARACTER_COL}${SQUARE}"
+        # else
+        #     printf "%s" "${COL_CURRENT}${CHARACTER_COL}${SQUARE}"
+        # fi
         ((counter++))
     done
     printf "%s" "${output}"
@@ -100,4 +108,5 @@ monthly() {
     echo
 }
 
-monthly
+# monthly
+basic
