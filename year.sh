@@ -131,5 +131,22 @@ monthly() {
     done
 }
 
-# daily
-monthly
+# customize options
+if [[ $# -eq 0 ]]
+then
+    daily
+    exit 0
+fi
+
+while getopts dm option
+do
+    case "${option}" in
+        d) daily;;
+        m) monthly;;
+        *) printf "
+            Usage:\n
+            -d :all the days together \n
+            -m :separated into months
+            "
+    esac
+done

@@ -12,11 +12,13 @@ Why? Read the Intro above.
 
 = To Do =
 - [X] show squares corresponding to days left in the year
-- [O] display by month if argument set
+- [X] display by month if argument set
 - [ ] make it show on start up (once)
 
 = Tribulations =
 - ASCII codes very limited and terminal specific
+- date is easier to work with than cal, which had issues of not being integers when being awked
+- best for loop style?
 
 = Technical Concepts =
 * terminal control code: characters not printed -> preforms action
