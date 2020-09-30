@@ -85,28 +85,49 @@ monthly() {
     for mon_str in "${month_str_arr[@]}"
     do
         # short form of month label
-        printf "${COL_HEADER}$mon_str "
+        printf "${BG_HEADER}${FG_HEADER}$mon_str:"
 
         # number of days in the indexed month
-        max_days=`cal $ctr_month $CURRENT_YEAR | awk 'NF {D = $NF}; END {print D}'`
+        max_days=`date -d "$ctr_month/1 + 1 month - 1 day" "+%d"`
 
         # assign proper colour
         if [ $ctr_month -lt $CURRENT_MONTH ]
         then
-            COL_CURRENT=${COL_RED}
-            for i in $(eval echo {0..$max_days})
+            BG_COL=${BG_RED}
+            for ((i=1; i <= ${max_days}; i++))
             do
-                printf "${COL_CURRENT}${CHARACTER_COL}${SQUARE}"
+                printf "${BG_COL}${FG_COL}${SQUARE}"
+            done
+        elif [ $ctr_month -eq $CURRENT_MONTH ]
+        then
+            for ((i=1; i <= $((CURRENT_DAY-1)); i++))
+            do
+                printf "${BG_COL}${FG_COL}${SQUARE}"
+            done
+
+            # today
+            BG_COL=${BG_WHITE}
+            FG_COL=${FG_RED}
+            printf "${BG_COL}${FG_COL}X"
+
+            # rest of the month
+            BG_COL=${BG_BLACK}
+            FG_COL=${FG_WHITE}
+
+            for ((i=$((CURRENT_DAY+1)), j=$max_days; i <= j; i++ ))
+            do
+                printf "${BG_COL}${FG_COL}${SQUARE}$i"
             done
         else
-            COL_CURRENT=${COL_BLACK}
-            for i in $(eval echo {0..$max_days})
+            BG_COL=${BG_BLACK}
+            for ((i=1; i <= ${max_days}; i++))
             do
-                printf "${COL_CURRENT}${CHARACTER_COL}${SQUARE}"
+                printf "${BG_COL}${FG_COL}${SQUARE}"
             done
         fi
+
         
-        printf "\n"
+        printf "${BG_HEADER}\n"
         ((ctr_month++))
     done
 
