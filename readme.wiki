@@ -12,7 +12,7 @@ Why? Read the Intro above.
 
 = To Do =
 - [X] show squares corresponding to days left in the year
-- [.] display by month if argument set
+- [O] display by month if argument set
 - [ ] make it show on start up (once)
 
 = Tribulations =
@@ -21,3 +21,5 @@ Why? Read the Intro above.
 = Technical Concepts =
 * terminal control code: characters not printed -> preforms action
     - resource: https://wiki.bash-hackers.org/scripting/terminalcodes
+* last day of the month trick: idea is add month minus day
+    - link: https://stackoverflow.com/questions/12381501/how-to-use-bash-to-get-the-last-day-of-each-month-for-the-current-year-without-u

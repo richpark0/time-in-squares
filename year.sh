@@ -87,7 +87,7 @@ monthly() {
         # short form of month label
         printf "${BG_HEADER}${FG_HEADER}$mon_str:"
 
-        # number of days in the indexed month
+        # number of days in the indexed month: add month minus day
         max_days=`date -d "$ctr_month/1 + 1 month - 1 day" "+%d"`
 
         # assign proper colour
@@ -126,15 +126,9 @@ monthly() {
             done
         fi
 
-        
         printf "${BG_HEADER}\n"
         ((ctr_month++))
     done
-
-    # for date_idx in "${DATE_ARR[@]}"
-    # do
-    #     echo $date_idx
-    # done
 }
 
 # daily
