@@ -12,7 +12,7 @@ Why? Read the Intro above.
 
 = To Do =
 - [X] show squares corresponding to days left in the year
-- [ ] display by month if argument set
+- [.] display by month if argument set
 - [ ] make it show on start up (once)
 
 = Tribulations =

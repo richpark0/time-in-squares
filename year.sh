@@ -34,21 +34,70 @@ COL_WHITE="$(tput setab 7)"
 COL_CURRENT=${COL_RED}
 CHARACTER_COL="$(tput setaf 7)"
 
-# counter of days past in the year
-counter=0
-while [ $counter -le $MAX_DAYS ]
-do
-    if [ $counter -lt $CURRENT_DAYS ]
-    then
-        COL_CURRENT=${COL_RED}
-    elif [ $counter -eq $CURRENT_DAYS ]
-    then
-        COL_CURRENT=${COL_WHITE}
-    else
-        COL_CURRENT=${COL_BLACK}
-    fi
-    printf "%s" "${COL_CURRENT}${CHARACTER_COL}${SQUARE}"
-    ((counter++))
-done
-# remove the last character - weird output %
-echo
+# | Year progress with days |
+basic() {
+    # counter of days past in the year
+    counter=0
+    while [ $counter -le $MAX_DAYS ]
+    do
+        if [ $counter -lt $CURRENT_DAYS ]
+        then
+            COL_CURRENT=${COL_RED}
+        elif [ $counter -eq $CURRENT_DAYS ]
+        then
+            COL_CURRENT=${COL_WHITE}
+        else
+            COL_CURRENT=${COL_BLACK}
+        fi
+        printf "%s" "${COL_CURRENT}${CHARACTER_COL}${SQUARE}"
+        ((counter++))
+    done
+    # remove the last character - weird output %
+    echo
+}
+
+# | Monthly Separated |
+monthly() {
+    # months in the short form
+    month_str=`locale abmon` 
+    month_arr=($(echo $month_str | tr ";" "\n"))
+
+    # resulting output
+    # TODO: string or vector
+    output=''
+
+    for mon_idx in "${month_arr[@]}"
+    do
+        echo $mon_idx
+    done
+
+    counter=0
+    while [ $counter -le $MAX_DAYS ]
+    do
+        # colour picker
+        if [ $counter -lt $CURRENT_DAYS ]
+        then
+            COL_CURRENT=${COL_RED}
+        elif [ $counter -eq $CURRENT_DAYS ]
+        then
+            COL_CURRENT=${COL_WHITE}
+        else
+            COL_CURRENT=${COL_BLACK}
+        fi
+
+        # formatter
+        is_column_end=$(($counter % 3))
+        if [ $is_column_end -eq 0 ]
+        then
+            printf "\n%s" "${COL_CURRENT}${CHARACTER_COL}${SQUARE}"
+        else
+            printf "%s" "${COL_CURRENT}${CHARACTER_COL}${SQUARE}"
+        fi
+        ((counter++))
+    done
+    printf "%s" "${output}"
+    # remove the last character - weird output %
+    echo
+}
+
+monthly
