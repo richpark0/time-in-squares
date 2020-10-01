@@ -116,7 +116,7 @@ monthly() {
 
             for ((i=$((CURRENT_DAY+1)), j=$max_days; i <= j; i++ ))
             do
-                printf "${BG_COL}${FG_COL}${SQUARE}$i"
+                printf "${BG_COL}${FG_COL}${SQUARE}"
             done
         else
             BG_COL=${BG_BLACK}
