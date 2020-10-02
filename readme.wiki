@@ -11,9 +11,11 @@ A startup script to see time remaining in the year as a progress of coloured squ
 Why? Read the Intro above.
 
 = To Do =
-1. [X] show squares corresponding to days left in the year
-2. [X] display by month if argument set
+1. [X] show squares corresponding to days left in the year\
+2. [X] display by month if argument set  
 3. [ ] make it show on start up (once)
+
+4. [ ] test
 
 = Tribulations =
 - ASCII codes very limited and terminal specific
