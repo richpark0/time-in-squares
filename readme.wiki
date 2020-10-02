@@ -11,17 +11,15 @@ A startup script to see time remaining in the year as a progress of coloured squ
 Why? Read the Intro above.
 
 = To Do =
-1. [X] show squares corresponding to days left in the year\
-2. [X] display by month if argument set  
-3. [ ] make it show on start up (once)
-
-4. [ ] test
+* [X] show squares corresponding to days left in the year
+* [X] display by month if argument set
+* [ ] make it show on start up (once)
 
 = Tribulations =
-- ASCII codes very limited and terminal specific
-- date is easier to work with than cal, which had issues of not being integers when being awked
-- best for loop style?
+* ASCII codes very limited and terminal specific
+* date is easier to work with than cal, which had issues of not being integers when being awked
+* best for loop style?
 
 = Technical Concepts =
-* terminal control code: characters not printed -> preforms action [[https://wiki.bash-hackers.org/scripting/terminalcodes | link to resource]]
-* last day of the month trick: idea is add month minus day [[https://stackoverflow.com/questions/12381501/how-to-use-bash-to-get-the-last-day-of-each-month-for-the-current-year-without-u | post ]]
+* terminal control code: characters not printed -> preforms action: [[https://wiki.bash-hackers.org/scripting/terminalcodes | link to resource]]
+* last day of the month trick: idea is add month minus day: [[https://stackoverflow.com/questions/12381501/how-to-use-bash-to-get-the-last-day-of-each-month-for-the-current-year-without-u | link to post ]]
